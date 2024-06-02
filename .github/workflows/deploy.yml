@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Listar todos os arquivos do projeto
+      run: ls -la
+
+    - name: Transferir HTML para a VM
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.IP }} # IP da sua VM como secret no repositorio
+        username: ubuntu # user da sua VM caso nao seja padrao
+        key: ${{ secrets.SSH_PRIVATE_KEY }} # chave ssh arquivo github como secret
+        source: "*" # copia todos arquivos
+        target: "/home/ubuntu" # caminho para o local que o arquivo vai ficar na VM
