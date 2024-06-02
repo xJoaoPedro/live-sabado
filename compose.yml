@@ -4,7 +4,7 @@ services:
         image: httpd:alpine
         container_name: 'Apache'
         ports:
-            - 9999:80
+            - 80:80
         volumes:
             - ./htdocs:/usr/local/apache2/htdocs/
         networks:
